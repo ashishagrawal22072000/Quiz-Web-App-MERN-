@@ -1,0 +1,84 @@
+{
+  "students": [
+    {
+      "id": 1649846922515,
+      "name": "manish",
+      "email": "manish@gmail.com",
+      "password": "1234",
+      "score": 6,
+      "status": "completed",
+      "answers": [
+        "New York",
+        "Jeff Bezos",
+        "Apple",
+        "1",
+        "Indian",
+        "France",
+        "Rajendra Prasad",
+        "ROM",
+        "Authentication",
+        "Burning"
+      ]
+    },
+    {
+      "id": 1649850067677,
+      "name": "shivam",
+      "email": "shivam@gmail.com",
+      "password": "1234",
+      "score": 8,
+      "status": "completed",
+      "answers": [
+        "Paris",
+        "Elon Musk",
+        "Apple",
+        "7",
+        "Arctic",
+        "France",
+        "Zakir Hussain",
+        "ROM",
+        "Accessibility",
+        "Burning"
+      ]
+    },
+    {
+      "id": 1649909471668,
+      "name": "mahesh",
+      "email": "mahesh@gmail.com",
+      "password": "MAH@esh123",
+      "score": 2,
+      "status": "completed",
+      "answers": [
+        "New York",
+        "Jeff Bezos",
+        "Apple",
+        "1",
+        "Indian",
+        "France",
+        "Radha Krishnan",
+        "RAM",
+        "Configuration",
+        "Storing"
+      ]
+    },
+    {
+      "id": 1649913566998,
+      "name": "ashish",
+      "email": "ashish@gmail.com",
+      "password": "ASH@ish123",
+      "score": 10,
+      "status": "completed",
+      "answers": [
+        "Paris",
+        "Elon Musk",
+        "Apple",
+        "7",
+        "Arctic",
+        "France",
+        "Rajendra Prasad",
+        "ROM",
+        "Authentication",
+        "Burning"
+      ]
+    }
+  ]
+}
