@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { register, login } from "../Action";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -9,52 +7,17 @@ import StudentNav from "./StudentNav";
 export default function Register() {
   const emialregex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
   const passregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const student = useSelector((state) => state.student.student);
   const [datas, setdatas] = useState({
     username: "",
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    dispatch(login());
-  }, []);
-  // const registerStudent = (e) => {
-  //   e.preventDefault();
-  //   const present = student.some((ele) => {
-  //     return ele.email === datas.email;
-  //   });
-
-  //   if (datas.name === "" || datas.email === "" || datas.password === "") {
-  //     toast.warn("Please Enter All The Required Fields");
-  //   } else if (!emialregex.test(datas.email)) {
-  //     toast.warn("Invalid Email");
-  //   } else if (present) {
-  //     toast.warn("User Already Exist");
-  //   } else if (!passregex.test(datas.password)) {
-  //     toast.warn(
-  //       "Password must contain Minimum eight characters, at least one letter, one number and one special character:"
-  //     );
-  //   } else {
-  //     dispatch(
-  //       register({
-  //         ...datas,
-  //         id: Date.now(),
-  //       })
-  //     );
-  //     setdatas({
-  //       id: "",
-  //       name: "",
-  //       email: "",
-  //       password: "",
-  //     });
-
-  //     navigate("/studentlogin", { replace: true });
-  //   }
-  // };
-
+  // if (!emialregex.test(datas.email)) {
+  //   //     toast.warn("Invalid Email");
+  //   //   }
+ 
+ 
   const registerStudent = async (e) => {
     e.preventDefault();
 

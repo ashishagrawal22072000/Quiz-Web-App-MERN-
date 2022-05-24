@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Questions from "../Questions";
+import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import axios from "axios";
-import { login, studentscore } from "../Action";
 import { useSelector, useDispatch } from "react-redux";
 import StudentNav from "./StudentNav";
 import { toast } from "react-toastify";
 export default function Quizz() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const student = useSelector((state) => state.student.student);
   const [currStudent, setCurrStudent] = useState();
   const [quedata, setquedata] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -19,22 +13,36 @@ export default function Quizz() {
   const [score, setScore] = useState(0);
   const [saveans, setsaveans] = useState([]);
   const [completeQuiz, setCompleteQuiz] = useState("");
+  const [inputval, setinputval] = useState("");
+  console.log("the input value is ", inputval);
+  const input = useRef([]);
+  
 
-  const handleAnswerOptionClick = (text) => {
-    console.log("wgvfbfjhrrnegkvrngnweigwqefwjeqnfkjwnevke", text);
-    setsaveans([...saveans, text]);
-    if (
-      text ==
-      quedata[currentQuestion]?.options[quedata[currentQuestion]?.answer-1]
-    ) {
-      setScore(score + 1);
-    }
-
-    const nextQuestion = currentQuestion + 1;
-    if (nextQuestion < quedata.length) {
-      setCurrentQuestion(nextQuestion);
+  const submitAnswer = () => {
+    if (inputval === "") {
+      alert("Please Select An Option");
     } else {
-      setShowScore(true);
+      const submit = window.confirm("Are You Sure To Submit");
+      if (submit) {
+        setsaveans([...saveans, inputval]);
+        if (
+          inputval ==
+          quedata[currentQuestion]?.options[
+            quedata[currentQuestion]?.answer - 1
+          ]
+        ) {
+          setScore(score + 1);
+          console.log(score);
+        }
+
+        const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < quedata.length) {
+          setCurrentQuestion(nextQuestion);
+          setinputval("");
+        } else {
+          setShowScore(true);
+        }
+      }
     }
   };
 
@@ -97,7 +105,6 @@ export default function Quizz() {
       });
 
       const data = await res.json();
-      console.log(data[currentQuestion]?.answer);
       setCurrStudent(data);
 
       if (!data.status === 200) {
@@ -139,8 +146,6 @@ export default function Quizz() {
     getAuth();
     calldata();
   }, []);
-
-  console.log(quedata[currentQuestion]?.answer);
 
   return (
     <>
@@ -189,83 +194,41 @@ export default function Quizz() {
                   {quedata[currentQuestion]?.options.map((answerOption, i) => {
                     return (
                       <>
-                        <button
-                          className="btn btn-dark mt-5 fw-bold "
-                          style={{ width: "200px", height: "50px" }}
-                          onClick={() => handleAnswerOptionClick(answerOption)}
-                        >
-                          {answerOption}
-                        </button>
+                        <div class="form-check my-3">
+                          <input
+                            class="form-check-input text-center"
+                            type="radio"
+                            name="exampleRadios"
+                            id="exampleRadios2"
+                            value={answerOption}
+                            onClick={(el) => {
+                              input.current[i] = el;
+                              let val = input.current[i].target.value;
+                              setinputval(val);
+                            }}
+                            style={{ height: "20px", width: "20px" }}
+                          />
+                          <label
+                            class="form-check-label text-center text-secondary"
+                            for="exampleRadios2"
+                          >
+                            <h4>{answerOption}</h4>
+                          </label>
+                        </div>
                       </>
                     );
                   })}
+                </div>
+                <div className="conatiner-fluid d-flex justify-content-end">
+                  <button className="btn btn-danger" onClick={submitAnswer}>
+                    Submit
+                  </button>
                 </div>
               </div>
             )}
           </>
         )}
       </div>
-
-      {/* <div className="container">
-        {showScore ? (
-          <div className="score-section container p-5 mt-5 bg-warning">
-            <h1 className="text-center">
-              You scored{" "}
-              <span
-                className={`${
-                  score >= quedata.length / 2 ? "text-success" : "text-danger"
-                }`}
-              >
-                {score}
-              </span>{" "}
-              out of {quedata.length}
-            </h1>
-            <div className="container d-flex mt-5 justify-content-center align-items-center">
-              <button className="btn btn-dark fw-bold" onClick={save}>
-                Save
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="container p-5 mt-5 bg-warning ">
-              <h1 className="text-center">Quizz App</h1>
-              <hr />
-              <div className="question-count mt-5">
-                <span className="fw-bold text-muted">
-                  Question {currentQuestion + 1} of {quedata.length}
-                </span>
-              </div>
-              <div className="question-text mt-3">
-              <h2 className="fw-bold">{quedata[1].question}</h2>
-
-                  
-               
-              </div>
-              <div className="container d-flex flex-column justify-content-center align-items-start">
-                {Questions[currentQuestion].options.map((answerOption) => {
-                  return (
-                    <>
-                      <button
-                        className="btn btn-dark mt-5 fw-bold "
-                        style={{ width: "200px", height: "50px" }}
-                        onClick={() =>
-                          handleAnswerOptionClick(
-                            answerOption.isCorrect,
-                            answerOption.answerText
-                          )
-                        }
-                      >
-                        {answerOption.answerText}
-                      </button>
-                    </>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
-      </div> */}
     </>
   );
 }

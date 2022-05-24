@@ -87,15 +87,7 @@ export default function CreateQuizz() {
 
   const AddQuestion = async (e) => {
     e.preventDefault();
-    if (addQue.answer == "1") {
-      setAddQue({ ...addQue, answer: options.option1 });
-    } else if (addQue.answer == "2") {
-      setAddQue({ ...addQue, answer: options.option2 });
-    } else if (addQue.answer == "3") {
-      setAddQue({ ...addQue, answer: options.option3 });
-    } else if (addQue.answer == "4") {
-      setAddQue({ ...addQue, answer: options.option4 });
-    } else {
+    if (addQue.answer == "Please Select" || addQue.answer == "") {
       alert("Please Select The Appropriate Option");
     }
     console.log([
@@ -124,6 +116,7 @@ export default function CreateQuizz() {
     const data = await res.json();
     if (res.status === 200) {
       toast.success(data.message);
+      window.location.reload();
     } else {
       toast.error(data.error);
     }

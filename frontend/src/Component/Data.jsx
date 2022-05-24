@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { admindata } from "../Action/index";
 import { useDispatch, useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 import AdminNav from "./AdminNav";
 import Chart from "./Chart";
 import { ImCheckmark, ImCross } from "react-icons/im";
 export default function Data() {
-  const cookie = Cookies.get("admin");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const students = useSelector((state) => state.student.student);
   const [currAdmin, setCurrAdmin] = useState();
   const [studentData, setStudentData] = useState([]);
   const [queData, setQueData] = useState([]);
@@ -125,7 +120,7 @@ export default function Data() {
               <h1 className="text-dark">{complete_quiz.length}</h1>
               <h3 className="text-dark">Complete Quiz</h3>
             </div>
-            <div className="container bg-red mx-3 p-5 shadow-lg rounded">
+            <div className="container bg-danger mx-3 p-5 shadow-lg rounded">
               <h1 className="text-dark">
                 {complete_quiz.length - pass_quiz.length}
               </h1>
@@ -138,9 +133,9 @@ export default function Data() {
           </div>
 
           <div className="container-fluid p-5 mt-5">
-            <h1 className="text-center mb-3">All Users</h1>
+            <h1 className="text-center mb-3">All Students Data</h1>
             <hr />
-            <table className="table table-dark table-hover border border-dark">
+            <table className="table table-border">
               <thead>
                 <tr>
                   <th scope="col">S.No.</th>
@@ -157,7 +152,10 @@ export default function Data() {
                 {studentData.map((ele, i) => {
                   return (
                     <>
-                      <tr key={i + 1}>
+                      <tr
+                        key={i + 1}
+                        className={`${ele.status ? "bg-success" : "bg-danger"}`}
+                      >
                         <th>{i + 1}</th>
                         <th>{ele._id}</th>
                         <td>{ele.username}</td>

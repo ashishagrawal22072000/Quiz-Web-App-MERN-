@@ -1,45 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "../Action";
 import "bootstrap/dist/css/bootstrap.css";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
 import StudentNav from "./StudentNav";
 export default function Login() {
-  const dispatch = useDispatch();
-  const student = useSelector((state) => state.student.student);
- 
   const navigate = useNavigate();
-  // const cookie = Cookies.get("student");
-
-  // useEffect(() => {
-  //   if (cookie) {
-  //     navigate("/quizz", { replace: true });
-  //   } else {
-  //     dispatch(login());
-  //   }
-  // }, []);
-
-  // const loginStudent = (e) => {
-  //   e.preventDefault();
-  //   const valid_student = student.filter((ele) => {
-  //     return ele.email === data.email && ele.password === data.password;
-  //   });
-
-  //   if (valid_student.length !== 0) {
-  //     Cookies.set("student", valid_student[0].id);
-  //     navigate("/quizz", { replace: true });
-
-  //     setdata({
-  //       email: "",
-  //       password: "",
-  //     });
-  //   } else {
-  //     toast.error("Invalid logins");
-  //   }
-  // };
+  const [currStudent, setCurrStudent] = useState();
 
   const [data, setdata] = useState({
     email: "",
@@ -63,9 +30,46 @@ export default function Login() {
       toast.error(datas.error);
     } else {
       toast.success(datas.message);
-      navigate("/quizz", { replace: true });
+
+      navigate(`/student`, { replace: true });
     }
   };
+
+  const getAuth = async () => {
+    try {
+      const res = await fetch("/student", {
+        method: "GET",
+        headers: {
+          Accept: "appllication/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      setCurrStudent(data);
+      console.log(data);
+
+      if (!data.status === 200) {
+        const err = new Error(data.error);
+        throw err;
+      }
+    } catch (err) {
+      console.log(err);
+      navigate("/student/login", { replace: true });
+    }
+  };
+
+  useEffect(() => {
+    getAuth();
+  }, []);
+
+  console.log(currStudent);
+
+  if (currStudent) {
+    navigate("/student", { replace: true });
+  }
+
   return (
     <>
       <StudentNav />

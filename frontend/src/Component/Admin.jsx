@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
 import AdminNav from "./AdminNav";
 export default function Admin() {
   const [datas, setdatas] = useState({
@@ -31,12 +30,7 @@ export default function Admin() {
       navigate("/admin/data", { replace: true });
     }
   };
-  // useEffect(() => {
-  //   const cookie = Cookies.get("admin");
-  //   if (cookie) {
-  //     navigate("/data", { replace: true });
-  //   }
-  // });
+  
   return (
     <>
       <AdminNav />

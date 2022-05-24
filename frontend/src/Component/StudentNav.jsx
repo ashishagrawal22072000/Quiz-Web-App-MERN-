@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-export default function StudentNav({ compQuizz }) {
-  const cookie = Cookies.get("student");
+export default function StudentNav() {
   const [currStudent, setCurrStudent] = useState();
   const navigate = useNavigate();
 
   const getAuth = async () => {
     try {
-      const res = await fetch("/quizz", {
+      const res = await fetch("/student", {
         method: "GET",
         headers: {
           Accept: "appllication/json",
@@ -88,7 +87,7 @@ export default function StudentNav({ compQuizz }) {
                     </Link>
                   </li>
                 </ul>
-                {compQuizz ? (
+                {currStudent?.status ? (
                   <>
                     <div>
                       <button className="btn btn-dark" onClick={logout}>

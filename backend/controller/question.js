@@ -34,7 +34,7 @@ const Authenticate = async (req, res, next) => {
 };
 
 router.post("/question/add", async (req, res) => {
-  console.log(req.body.options);
+  console.log(req.body);
   try {
     const question = new questionModel({
       question: req.body.question,

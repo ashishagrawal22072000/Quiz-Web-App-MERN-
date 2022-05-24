@@ -1,15 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 export default function AdminNav() {
-  const cookie = Cookies.get("admin");
 
-  const navigate = useNavigate();
-  const logout = () => {
-    Cookies.remove("admin");
-    navigate("/admin/login", { replace: true });
-  };
+   const logout =() =>{
+     
+   }
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,7 +26,7 @@ export default function AdminNav() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div className={`${cookie ? "d-block" : "d-none"}`}>
+            <div>
               <button
                 className="btn btn-dark fw-bold text-light"
                 onClick={logout}
@@ -37,7 +34,7 @@ export default function AdminNav() {
                 LogOut
               </button>
             </div>
-            <div className={`${cookie ? "d-none" : "d-block"}`}>
+            <div >
               <button className="btn btn-dark mx-3 fw-bold text-light">
                 <Link to="/admin/login" className="fw-bold text-light">
                   Admin
