@@ -10,29 +10,6 @@ const { SECRETKEY } = require("../config");
 router.use(cookieParser());
 router.use(express.json());
 
-const Authenticate = async (req, res, next) => {
-  try {
-    const token = req.cookies.jwtt;
-    console.log("helllo from authenticationNNNNNNNN", token);
-    const verifyToken = jwt.verify(token, SECRETKEY);
-
-    const rootStudent = await studentModel.findOne({
-      _id: verifyToken._id,
-    });
-
-    if (!rootStudent) {
-      throw new Error(`Student not Found`);
-    }
-    req.token = token;
-    req.rootStudent = rootStudent;
-    req.studentID = rootStudent._id;
-    next();
-  } catch (err) {
-    res.status(401).send("Unauthorized :  No Token Provided");
-    console.log(err);
-  }
-};
-
 router.post("/question/add", async (req, res) => {
   console.log(req.body);
   try {
@@ -69,7 +46,7 @@ router.get("/questions", async (req, res) => {
   const questions = await questionModel.find({});
   res.send(questions);
 });
-router.get("/quizzdata", Authenticate, async (req, res) => {
+router.get("/quizzdata", authentication, async (req, res) => {
   try {
     const studentStatus = await studentModel.findOne({
       _id: req.studentID,
@@ -106,20 +83,6 @@ router.patch("/result", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
-
-// router.get("/quizz", Authenticate, (req, re) => {
-//   res.send(req.studentID);
-// });
-
-// router.get("/quizzdata", async (req, res) => {
-//   const questions = await questionModel.find({});
-//   res.send(questions);
-// });
-
-router.post("/logout", (req, res) => {
-  res.clearCookie("jwtt", { path: "/" });
-  res.status(200).send({ message: "Logout" });
 });
 
 module.exports = router;

@@ -36,7 +36,9 @@ export default function Register() {
   return (
     <>
       <StudentNav />
-      <div className="container p-5 mt-5 bg-warning">
+      
+      <div className="container p-5 mt-5 bg-warning w-50 d-flex justify-content-center">
+        <div className="container">
         <form method="POST">
           <h1 className="text-center">Register Yourself</h1>
           <hr />
@@ -98,6 +100,7 @@ export default function Register() {
             Already Have An Account ? <Link to="/student/login">Login</Link>
           </p>
         </form>
+        </div>
       </div>
     </>
   );

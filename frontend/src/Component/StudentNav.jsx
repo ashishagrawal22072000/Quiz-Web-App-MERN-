@@ -29,7 +29,7 @@ export default function StudentNav() {
   };
 
   const logout = () => {
-    fetch("/logout", {
+    fetch("/student/logout", {
       method: "POST",
       headers: {
         Accept: "appllication/json",

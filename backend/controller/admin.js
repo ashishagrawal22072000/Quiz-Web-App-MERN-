@@ -93,6 +93,14 @@ router.get("/data", Authenticate, (req, res) => {
   res.send(req.adminID);
 });
 
+router.get("/", Authenticate, async (req, res) => {
+  res.json(req.rootAdmin);
+});
+router.post("/logout", (req, res) => {
+  res.clearCookie("admin", { path: "/" });
+  res.status(200).send({ message: "Logout" });
+});
+
 router.get("/alldata", async (req, res) => {
   try {
     const studentData = await studentModel.find({});

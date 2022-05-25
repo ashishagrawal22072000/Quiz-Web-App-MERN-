@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {AiTwotoneDelete} from 'react-icons/ai'
+import { AiTwotoneDelete } from "react-icons/ai";
 export default function CreateQuizz() {
   const navigate = useNavigate();
   const [queData, setQueData] = useState([]);
@@ -55,7 +55,6 @@ export default function CreateQuizz() {
       });
 
       const data = await res.json();
-      console.log(data);
       setQueData(data);
       if (!data.status === 200) {
         const err = new Error(data.error);
@@ -152,7 +151,6 @@ export default function CreateQuizz() {
                     <td>{i + 1}</td>
                     <td>{ele.question}</td>
                     {ele.options.map((option) => {
-                      console.log(option);
                       return (
                         <>
                           <td>{option}</td>
@@ -174,7 +172,7 @@ export default function CreateQuizz() {
                             variant="primary"
                             onClick={handleShow}
                             className="mx-2 rounded-circle fw-bold text-light text-center btn btn-success"
-                            style={{fontSize: '20px'}}
+                            style={{ fontSize: "20px" }}
                           >
                             +
                           </Button>
@@ -196,11 +194,11 @@ export default function CreateQuizz() {
             </Modal.Header>
             <Modal.Body>
               <form method="POST">
-                <div className="form-group">
-                  <label for="question">Question</label>
+                <div className="form-group p-1">
+                  <label htmlFor="question">Question</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control mb-3 fw-bold"
                     id="question"
                     aria-describedby="emailHelp"
                     placeholder="Question"
@@ -210,11 +208,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div className="form-group">
-                  <label for="option1">Option 1</label>
+                <div className="form-group p-1">
+                  <label htmlFor="option1">Option 1</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control mb-3 fw-bold"
                     id="option1"
                     aria-describedby="emailHelp"
                     placeholder="Option 1"
@@ -224,11 +222,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div className="form-group">
-                  <label for="option2">Option 2</label>
+                <div className="form-group p-1">
+                  <label htmlFor="option2">Option 2</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control mb-3 fw-bold"
                     id="option2"
                     aria-describedby="emailHelp"
                     placeholder="Option 2"
@@ -238,11 +236,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div className="form-group">
-                  <label for="option3">Option 3</label>
+                <div className="form-group p-1">
+                  <label htmlFor="option3">Option 3</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control mb-3 fw-bold"
                     id="option3"
                     aria-describedby="emailHelp"
                     placeholder="Option 3"
@@ -252,11 +250,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div className="form-group">
-                  <label for="option4">Option 4</label>
+                <div className="form-group p-1">
+                  <label htmlFor="option4">Option 4</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control mb-3 fw-bold"
                     id="option4"
                     aria-describedby="emailHelp"
                     placeholder="Option 4"
@@ -266,7 +264,8 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group p-1">
+                  <label>Select Answer</label>
                   <select
                     className="custom-select custom-select-lg mb-3"
                     onChange={(e) =>
@@ -274,7 +273,7 @@ export default function CreateQuizz() {
                     }
                     value={addQue.answer}
                   >
-                    <option selected>Please Select</option>
+                    <option defaultValue>Please Select</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

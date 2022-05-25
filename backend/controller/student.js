@@ -118,4 +118,9 @@ router.get("/", authentication, async (req, res) => {
   res.json(req.rootStudent);
 });
 
+router.post("/logout", (req, res) => {
+  res.clearCookie("jwtt", { path: "/" });
+  res.status(200).send({ message: "Logout" });
+});
+
 module.exports = router;
