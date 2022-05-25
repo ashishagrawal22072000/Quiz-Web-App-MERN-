@@ -19,6 +19,9 @@ const studentSchema = new mongoose.Schema({
   status: {
     type: Boolean,
   },
+  result : {
+    type: String,
+  },
   answer: {
     type: Array,
   },

@@ -5,7 +5,7 @@ import { Bar } from "react-chartjs-2";
 ChartJS.register(...registerables);
 
 export default function Chart({ datas, label }) {
-  console.log("data in chart", datas);
+ 
 
   return (
     <div>

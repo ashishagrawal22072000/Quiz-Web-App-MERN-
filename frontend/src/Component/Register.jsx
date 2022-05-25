@@ -5,19 +5,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import StudentNav from "./StudentNav";
 export default function Register() {
-  const emialregex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-  const passregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
   const navigate = useNavigate();
   const [datas, setdatas] = useState({
     username: "",
     email: "",
     password: "",
   });
-  // if (!emialregex.test(datas.email)) {
-  //   //     toast.warn("Invalid Email");
-  //   //   }
- 
- 
+
   const registerStudent = async (e) => {
     e.preventDefault();
 
@@ -31,8 +25,8 @@ export default function Register() {
     });
 
     const data = await res.json();
-    if (res.status === 422 || !data) {
-      toast.error(data.error);
+    if (res.status === 400 || !data) {
+      toast.error(data.errors[0].msg);
     } else {
       toast.success(data.message);
       navigate("/student/login", { replace: true });
@@ -55,9 +49,14 @@ export default function Register() {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              autocomplete="off"
+              autoComplete="off"
               value={datas.username}
-              onChange={(e) => setdatas({ ...datas, username: e.target.value })}
+              onChange={(e) =>
+                setdatas({
+                  ...datas,
+                  username: e.target.value.toUpperCase(),
+                })
+              }
             />
           </div>
           <div className="mb-5">
@@ -69,7 +68,7 @@ export default function Register() {
               className="form-control"
               id="email"
               aria-describedby="emailHelp"
-              autocomplete="off"
+              autoComplete="off"
               value={datas.email}
               onChange={(e) => setdatas({ ...datas, email: e.target.value })}
             />

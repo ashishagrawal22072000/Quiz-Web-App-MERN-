@@ -23,7 +23,6 @@ export default function Data() {
       });
 
       const data = await res.json();
-      console.log(data);
       setCurrAdmin(data);
 
       if (!data.status === 200) {
@@ -48,7 +47,6 @@ export default function Data() {
       });
 
       const data = await res.json();
-      console.log(data);
       setStudentData(data);
 
       if (!data.status === 200) {
@@ -59,45 +57,22 @@ export default function Data() {
       console.log(err);
     }
   };
-  const callquestion = async () => {
-    try {
-      const res = await fetch("/questions", {
-        method: "GET",
-        headers: {
-          Accept: "appllication/json",
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      const data = await res.json();
-      console.log(data);
-      setQueData(data);
-      if (!data.status === 200) {
-        const err = new Error(data.error);
-        throw err;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  
 
   const complete_quiz = studentData.filter((ele) => {
     return ele.status == true;
   });
   const pass_quiz = studentData.filter((ele) => {
-    return ele.status === true && ele.score >= queData.length / 2;
+    return ele.result  == 'Pass';
   });
   useEffect(() => {
     getAuth();
     calldata();
-    callquestion();
   }, []);
 
   const chartdata = studentData.map((ele) => {
     return ele.score;
   });
-  console.log("this is chart data", chartdata);
   const chartlabel = studentData.map((ele) => {
     return ele.username;
   });
@@ -132,7 +107,7 @@ export default function Data() {
             </div>
           </div>
 
-          <div className="container-fluid p-5 mt-5">
+          <div className="container-fluid  mt-5">
             <h1 className="text-center mb-3">All Students Data</h1>
             <hr />
             <table className="table table-border">
@@ -142,9 +117,9 @@ export default function Data() {
                   <th scope="col">id</th>
                   <th scope="col">Name</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Password</th>
                   <th scope="col">Score</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Result</th>
                   <th scope="col">Answers</th>
                 </tr>
               </thead>
@@ -154,13 +129,12 @@ export default function Data() {
                     <>
                       <tr
                         key={i + 1}
-                        className={`${ele.status ? "bg-success" : "bg-danger"}`}
+                        className={`${ele.status ? "bg-light" : "bg-danger"}`}
                       >
                         <th>{i + 1}</th>
                         <th>{ele._id}</th>
                         <td>{ele.username}</td>
                         <td>{ele.email}</td>
-                        <td>{ele.password}</td>
                         <td>{ele.score}</td>
                         {ele.status ? (
                           <>
@@ -175,6 +149,7 @@ export default function Data() {
                             </td>
                           </>
                         )}
+                        <td className="fw-bold">{ele.result}</td>
                         <td>{ele.answer.join(",")}</td>
                       </tr>
                     </>

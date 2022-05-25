@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {AiTwotoneDelete} from 'react-icons/ai'
 export default function CreateQuizz() {
   const navigate = useNavigate();
   const [queData, setQueData] = useState([]);
@@ -31,7 +32,6 @@ export default function CreateQuizz() {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (!data.status === 200) {
         const err = new Error(data.error);
@@ -40,25 +40,6 @@ export default function CreateQuizz() {
     } catch (err) {
       console.log(err);
       navigate("/admin/login", { replace: true });
-    }
-  };
-
-  const deleteQuiz = async (id) => {
-    const confirmation = window.confirm("Are you sure you want to delete");
-    if (confirmation) {
-      const res = await fetch("/question/delete", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: id }),
-      });
-
-      const data = await res.json();
-      if (res.status === 200) {
-        toast.success(data.message);
-        window.location.reload();
-      }
     }
   };
 
@@ -85,40 +66,61 @@ export default function CreateQuizz() {
     }
   };
 
+  const deleteQuiz = async (id) => {
+    const confirmation = window.confirm("Are you sure you want to delete");
+    if (confirmation) {
+      const res = await fetch("/question/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+
+      const data = await res.json();
+      if (res.status === 200) {
+        toast.success(data.message);
+        callquestion();
+      }
+    }
+  };
+
   const AddQuestion = async (e) => {
     e.preventDefault();
     if (addQue.answer == "Please Select" || addQue.answer == "") {
       alert("Please Select The Appropriate Option");
-    }
-    console.log([
-      options.option1,
-      options.option2,
-      options.option3,
-      options.option4,
-    ]);
-    const res = await fetch("/question/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        question: addQue.question,
-        options: [
-          options.option1,
-          options.option2,
-          options.option3,
-          options.option4,
-        ],
-        answer: addQue.answer,
-      }),
-    });
-
-    const data = await res.json();
-    if (res.status === 200) {
-      toast.success(data.message);
-      window.location.reload();
     } else {
-      toast.error(data.error);
+      const res = await fetch("/question/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          question: addQue.question,
+          options: [
+            options.option1,
+            options.option2,
+            options.option3,
+            options.option4,
+          ],
+          answer: addQue.answer,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.status === 200) {
+        toast.success(data.message);
+        callquestion();
+        handleClose();
+        setOptions([{ option1: "", option2: "", option3: "", option4: "" }]);
+        setAddQue({
+          question: "",
+          answer: "",
+        });
+      } else {
+        toast.error(data.error);
+      }
     }
   };
 
@@ -129,7 +131,7 @@ export default function CreateQuizz() {
   return (
     <>
       <div className="container-fluid p-5">
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">Sr. No.</th>
@@ -139,7 +141,7 @@ export default function CreateQuizz() {
               <th scope="col">Option 3</th>
               <th scope="col">Option 4</th>
               <th scope="col">answer</th>
-              <th scope="col">Update</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -164,16 +166,17 @@ export default function CreateQuizz() {
                         className="btn btn-danger"
                         onClick={() => deleteQuiz(ele._id)}
                       >
-                        Delete
+                        <AiTwotoneDelete />
                       </button>
                       {queData.length == i + 1 ? (
                         <>
                           <Button
                             variant="primary"
                             onClick={handleShow}
-                            className="mx-2"
+                            className="mx-2 rounded-circle fw-bold text-light text-center btn btn-success"
+                            style={{fontSize: '20px'}}
                           >
-                            Add Que
+                            +
                           </Button>
                         </>
                       ) : (
@@ -193,11 +196,11 @@ export default function CreateQuizz() {
             </Modal.Header>
             <Modal.Body>
               <form method="POST">
-                <div class="form-group">
+                <div className="form-group">
                   <label for="question">Question</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="question"
                     aria-describedby="emailHelp"
                     placeholder="Question"
@@ -207,11 +210,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="option1">Option 1</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="option1"
                     aria-describedby="emailHelp"
                     placeholder="Option 1"
@@ -221,11 +224,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="option2">Option 2</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="option2"
                     aria-describedby="emailHelp"
                     placeholder="Option 2"
@@ -235,11 +238,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="option3">Option 3</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="option3"
                     aria-describedby="emailHelp"
                     placeholder="Option 3"
@@ -249,11 +252,11 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="option4">Option 4</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="option4"
                     aria-describedby="emailHelp"
                     placeholder="Option 4"
@@ -263,9 +266,9 @@ export default function CreateQuizz() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <select
-                    class="custom-select custom-select-lg mb-3"
+                    className="custom-select custom-select-lg mb-3"
                     onChange={(e) =>
                       setAddQue({ ...addQue, answer: e.target.value })
                     }

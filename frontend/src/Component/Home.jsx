@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <div className="container p-5 mt-5">
-        <div className="container p-5 mt-5">
+        <div classNameName="container p-5 mt-5">
           <div className="container p-lg-5 mt-5 d-flex jsutify-content-center align-items-center">
             <button
               className="btn btn-dark mx-5"

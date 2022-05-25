@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import StudentNav from "./StudentNav";
 import { toast } from "react-toastify";
 export default function Quizz() {
@@ -14,9 +13,8 @@ export default function Quizz() {
   const [saveans, setsaveans] = useState([]);
   const [completeQuiz, setCompleteQuiz] = useState("");
   const [inputval, setinputval] = useState("");
-  console.log("the input value is ", inputval);
+  const [result, setResult] = useState();
   const input = useRef([]);
-  
 
   const submitAnswer = () => {
     if (inputval === "") {
@@ -32,7 +30,6 @@ export default function Quizz() {
           ]
         ) {
           setScore(score + 1);
-          console.log(score);
         }
 
         const nextQuestion = currentQuestion + 1;
@@ -40,6 +37,11 @@ export default function Quizz() {
           setCurrentQuestion(nextQuestion);
           setinputval("");
         } else {
+          if (score >= quedata.length / 2) {
+            setResult("Pass");
+          } else {
+            setResult("Fail");
+          }
           setShowScore(true);
         }
       }
@@ -68,6 +70,11 @@ export default function Quizz() {
   };
 
   const save = async () => {
+    if (score >= quedata.length / 2) {
+      setResult("Pass");
+    } else {
+      setResult("Fail");
+    }
     const confirm = window.confirm("Are You Sure To Save");
     if (confirm) {
       const res = await fetch("/result", {
@@ -80,6 +87,7 @@ export default function Quizz() {
           score: score,
           status: true,
           answer: saveans,
+          result: result,
         }),
       });
 
@@ -129,7 +137,6 @@ export default function Quizz() {
       });
 
       const data = await res.json();
-      console.log(data);
       setquedata(data);
       setCompleteQuiz(data.error);
 
@@ -194,9 +201,9 @@ export default function Quizz() {
                   {quedata[currentQuestion]?.options.map((answerOption, i) => {
                     return (
                       <>
-                        <div class="form-check my-3">
+                        <div className="form-check my-3">
                           <input
-                            class="form-check-input text-center"
+                            className="form-check-input text-center"
                             type="radio"
                             name="exampleRadios"
                             id="exampleRadios2"
@@ -209,7 +216,7 @@ export default function Quizz() {
                             style={{ height: "20px", width: "20px" }}
                           />
                           <label
-                            class="form-check-label text-center text-secondary"
+                            className="form-check-label text-center text-secondary"
                             for="exampleRadios2"
                           >
                             <h4>{answerOption}</h4>

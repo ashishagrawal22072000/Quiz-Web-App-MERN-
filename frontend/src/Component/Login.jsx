@@ -48,11 +48,12 @@ export default function Login() {
 
       const data = await res.json();
       setCurrStudent(data);
-      console.log(data);
 
       if (!data.status === 200) {
         const err = new Error(data.error);
         throw err;
+      } else {
+        navigate("/student", { replace: true });
       }
     } catch (err) {
       console.log(err);
@@ -64,11 +65,8 @@ export default function Login() {
     getAuth();
   }, []);
 
-  console.log(currStudent);
-
-  if (currStudent) {
-    navigate("/student", { replace: true });
-  }
+  // if (currStudent) {
+  // }
 
   return (
     <>
@@ -87,7 +85,7 @@ export default function Login() {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              autocomplete="off"
+              autoComplete="off"
               value={data.email}
               onChange={(e) => setdata({ ...data, email: e.target.value })}
             />

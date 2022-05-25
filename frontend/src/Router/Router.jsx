@@ -9,6 +9,7 @@ import Quizz from "../Component/Quizz";
 import Error from "../Component/Error";
 import CreateQuizz from "../Component/CreateQuizz";
 import Student from "../Component/Student";
+import Result from "../Component/Result";
 
 export default function Router() {
   return (
@@ -24,6 +25,7 @@ export default function Router() {
           <Route path="*" element={<Error />} />
           <Route path="/admin/create" element={<CreateQuizz />} />
           <Route path="/student" element={<Student />} />
+          <Route path="/result" element={<Result />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -30,7 +30,7 @@ export default function Admin() {
       navigate("/admin/data", { replace: true });
     }
   };
-  
+
   return (
     <>
       <AdminNav />

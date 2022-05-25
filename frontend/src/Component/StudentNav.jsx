@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 export default function StudentNav() {
   const [currStudent, setCurrStudent] = useState();
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ export default function StudentNav() {
       });
 
       const data = await res.json();
-      console.log(data);
       setCurrStudent(data);
 
       if (!data.status === 200) {

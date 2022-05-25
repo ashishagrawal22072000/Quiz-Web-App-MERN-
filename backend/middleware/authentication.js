@@ -1,13 +1,16 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const studentModel = require("../model/StudentModel");
+// const { SECRETKEY } = require("../config");
+const cookieParser = require("cookie-parser");
+// const studentModel = require("../model/StudentModel");
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcryptjs");
 const { SECRETKEY } = require("../config");
-
 const Authenticate = async (req, res, next) => {
   try {
-    const token = req.Cookies.jwtt;
-    console.log("hello from authentication",token);
-    console.log("My Token is" + token);
+    const token = req.cookies.jwtt;
+    console.log("helllo from authenticationNNNNNNNN", token);
     const verifyToken = jwt.verify(token, SECRETKEY);
 
     const rootStudent = await studentModel.findOne({

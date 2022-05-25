@@ -13,7 +13,7 @@ router.use(express.json());
 const Authenticate = async (req, res, next) => {
   try {
     const token = req.cookies.jwtt;
-    console.log("helllo from authentication", token);
+    console.log("helllo from authenticationNNNNNNNN", token);
     const verifyToken = jwt.verify(token, SECRETKEY);
 
     const rootStudent = await studentModel.findOne({
@@ -43,10 +43,10 @@ router.post("/question/add", async (req, res) => {
     });
 
     const postquestion = await question.save();
-    res.status(200).send("QUESTION POST SUCCESSFUL");
+    res.status(200).json({ message: "QUESTION POST SUCCESSFUL" });
     console.log(postquestion);
   } catch (err) {
-    console.log(err);
+    res.status(422).json({ error: "SomeThing Went Wrong" });
   }
 });
 router.delete("/question/delete", async (req, res) => {
@@ -61,7 +61,7 @@ router.delete("/question/delete", async (req, res) => {
     console.log(err);
   }
 });
-router.get("/quizz", Authenticate, (req, res) => {
+router.get("/quizz", authentication, (req, res) => {
   res.send(req.rootStudent);
   console.log("root student is", req.rootStudent);
 });
@@ -98,6 +98,7 @@ router.patch("/result", async (req, res) => {
         score: req.body.score,
         status: req.body.status,
         answer: req.body.answer,
+        result: req.body.result,
       }
     );
     res.json({ message: "Result Saved SuccessFully" });
