@@ -5,7 +5,7 @@ import StudentNav from "./StudentNav";
 import { toast } from "react-toastify";
 export default function Quizz() {
   const navigate = useNavigate();
-  const [currStudent, setCurrStudent] = useState();
+  // const [currStudent, setCurrStudent] = useState();
   const [quedata, setquedata] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -49,7 +49,7 @@ export default function Quizz() {
   };
 
   const logout = () => {
-    fetch("/logout", {
+    fetch("/student/logout", {
       method: "POST",
       headers: {
         Accept: "appllication/json",
@@ -77,13 +77,12 @@ export default function Quizz() {
     }
     const confirm = window.confirm("Are You Sure To Save");
     if (confirm) {
-      const res = await fetch("/result", {
+      const res = await fetch("/quizz/result", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: currStudent._id,
           score: score,
           status: true,
           answer: saveans,
@@ -94,14 +93,40 @@ export default function Quizz() {
       const data = await res.json();
       if (res.status === 200) {
         toast.success(data.message);
+        console.log(data.message);
         logout();
       } else {
         toast.error(data.error);
+        console.log(data.error)
       }
     }
   };
 
-  const getAuth = async () => {
+  // const getAuth = async () => {
+  //   try {
+  //     const res = await fetch("/quizz", {
+  //       method: "GET",
+  //       headers: {
+  //         Accept: "appllication/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //       credentials: "include",
+  //     });
+
+  //     const data = await res.json();
+  //     setCurrStudent(data);
+
+  //     if (!data.status === 200) {
+  //       const err = new Error(data.error);
+  //       throw err;
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     navigate("/student/login", { replace: true });
+  //   }
+  // };
+
+  const calldata = async () => {
     try {
       const res = await fetch("/quizz", {
         method: "GET",
@@ -113,7 +138,9 @@ export default function Quizz() {
       });
 
       const data = await res.json();
-      setCurrStudent(data);
+      setquedata(data);
+      setCompleteQuiz(data.error);
+      console.log(data);
 
       if (!data.status === 200) {
         const err = new Error(data.error);
@@ -125,32 +152,8 @@ export default function Quizz() {
     }
   };
 
-  const calldata = async () => {
-    try {
-      const res = await fetch("/quizzdata", {
-        method: "GET",
-        headers: {
-          Accept: "appllication/json",
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      const data = await res.json();
-      setquedata(data);
-      setCompleteQuiz(data.error);
-
-      if (!data.status === 200) {
-        const err = new Error(data.error);
-        throw err;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
-    getAuth();
+    // getAuth();
     calldata();
   }, []);
 

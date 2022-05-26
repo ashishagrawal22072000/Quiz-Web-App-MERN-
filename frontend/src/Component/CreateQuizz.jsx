@@ -45,7 +45,7 @@ export default function CreateQuizz() {
 
   const callquestion = async () => {
     try {
-      const res = await fetch("/questions", {
+      const res = await fetch("/question", {
         method: "GET",
         headers: {
           Accept: "appllication/json",
@@ -66,6 +66,24 @@ export default function CreateQuizz() {
   };
 
   const deleteQuiz = async (id) => {
+    const confirmation = window.confirm("Are you sure you want to delete");
+    if (confirmation) {
+      const res = await fetch("/question/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+
+      const data = await res.json();
+      if (res.status === 200) {
+        toast.success(data.message);
+        callquestion();
+      }
+    }
+  };
+  const EditQuiz = async (id) => {
     const confirmation = window.confirm("Are you sure you want to delete");
     if (confirmation) {
       const res = await fetch("/question/delete", {

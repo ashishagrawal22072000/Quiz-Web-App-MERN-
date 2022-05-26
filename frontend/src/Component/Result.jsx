@@ -32,7 +32,7 @@ export default function Result() {
   };
   const callquestion = async () => {
     try {
-      const res = await fetch("/questions", {
+      const res = await fetch("/question", {
         method: "GET",
         headers: {
           Accept: "appllication/json",

@@ -90,7 +90,6 @@ router.post("/login", async (req, res) => {
 
     const studentlogin = await studentModel.findOne({ email: email });
     if (studentlogin) {
-      console.log(studentlogin);
       const comparePassword = await bcrypt.compare(
         password,
         studentlogin.password

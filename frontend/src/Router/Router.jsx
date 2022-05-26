@@ -23,7 +23,7 @@ export default function Router() {
           <Route path="/admin/data" element={<Data />} />
           <Route path="/quizz" element={<Quizz />} />
           <Route path="*" element={<Error />} />
-          <Route path="/admin/create" element={<CreateQuizz />} />
+          <Route path="/admin/question" element={<CreateQuizz />} />
           <Route path="/student" element={<Student />} />
           <Route path="/result" element={<Result />} />
         </Routes>

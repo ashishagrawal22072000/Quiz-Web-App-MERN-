@@ -9,9 +9,11 @@ app.use(cookieParser());
 const questions = require("./controller/question");
 const student = require("./controller/student");
 const admin = require("./controller/admin");
-app.use("/", questions);
+const quizz = require("./controller/quizz");
+app.use("/question", questions);
 app.use("/student", student);
 app.use("/admin", admin);
+app.use('/quizz', quizz)
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });

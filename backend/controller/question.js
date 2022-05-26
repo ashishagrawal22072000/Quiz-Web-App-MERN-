@@ -10,7 +10,7 @@ const { SECRETKEY } = require("../config");
 router.use(cookieParser());
 router.use(express.json());
 
-router.post("/question/add", async (req, res) => {
+router.post("/add", async (req, res) => {
   console.log(req.body);
   try {
     const question = new questionModel({
@@ -26,7 +26,7 @@ router.post("/question/add", async (req, res) => {
     res.status(422).json({ error: "SomeThing Went Wrong" });
   }
 });
-router.delete("/question/delete", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   const { id } = req.body;
   try {
     const findcurrentQuestion = await questionModel.findByIdAndRemove({
@@ -38,51 +38,31 @@ router.delete("/question/delete", async (req, res) => {
     console.log(err);
   }
 });
-router.get("/quizz", authentication, (req, res) => {
-  res.send(req.rootStudent);
-  console.log("root student is", req.rootStudent);
-});
-router.get("/questions", async (req, res) => {
+
+router.get("/", async (req, res) => {
   const questions = await questionModel.find({});
   res.send(questions);
 });
-router.get("/quizzdata", authentication, async (req, res) => {
-  try {
-    const studentStatus = await studentModel.findOne({
-      _id: req.studentID,
-      status: true,
-    });
+// router.get("/quizzdata", authentication, async (req, res) => {
+//   try {
+//     const studentStatus = await studentModel.findOne({
+//       _id: req.studentID,
+//       status: true,
+//     });
 
-    if (studentStatus) {
-      res.json({ error: "You Have Already Complete Your Quizz" });
-    } else {
-      const questions = await questionModel.find({});
-      res.send(questions);
-      console.log("kbfkevekhce", req.studentID);
-    }
+//     if (studentStatus) {
+//       res.json({ error: "You Have Already Complete Your Quizz" });
+//     } else {
+//       const questions = await questionModel.find({});
+//       res.send(questions);
+//       console.log("kbfkevekhce", req.studentID);
+//     }
 
-    console.log("this is the current student" + studentStatus);
-  } catch (err) {
-    console.log(err);
-  }
-});
+//     console.log("this is the current student" + studentStatus);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
-router.patch("/result", async (req, res) => {
-  try {
-    const findandUpdateResult = await studentModel.findByIdAndUpdate(
-      { _id: req.body.id },
-      {
-        score: req.body.score,
-        status: req.body.status,
-        answer: req.body.answer,
-        result: req.body.result,
-      }
-    );
-    res.json({ message: "Result Saved SuccessFully" });
-    console.log(findandUpdateResult);
-  } catch (err) {
-    console.log(err);
-  }
-});
 
 module.exports = router;

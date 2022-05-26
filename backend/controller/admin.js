@@ -89,8 +89,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/data", Authenticate, (req, res) => {
-  res.send(req.adminID);
+router.get("/data", Authenticate, async(req, res) => {
+  try {
+    const studentData = await studentModel.find({});
+    res.send(studentData);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/", Authenticate, async (req, res) => {
@@ -102,12 +107,7 @@ router.post("/logout", (req, res) => {
 });
 
 router.get("/alldata", async (req, res) => {
-  try {
-    const studentData = await studentModel.find({});
-    res.send(studentData);
-  } catch (err) {
-    console.log(err);
-  }
+  
 });
 
 module.exports = router;
