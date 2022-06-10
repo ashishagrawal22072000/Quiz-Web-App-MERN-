@@ -65,9 +65,6 @@ export default function Login() {
     getAuth();
   }, []);
 
-  // if (currStudent) {
-  // }
-
   return (
     <>
       <StudentNav />

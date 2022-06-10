@@ -1,40 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 import AdminNav from "./AdminNav";
 import Chart from "./Chart";
 import { ImCheckmark, ImCross } from "react-icons/im";
 export default function Data() {
   const navigate = useNavigate();
-  // const [currAdmin, setCurrAdmin] = useState();
   const [studentData, setStudentData] = useState([]);
-  // const [queData, setQueData] = useState([]);
-
-  // const getAuth = async () => {
-  //   try {
-  //     const res = await fetch("/admin/data", {
-  //       method: "GET",
-  //       headers: {
-  //         Accept: "appllication/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //     });
-
-  //     const data = await res.json();
-  //     setCurrAdmin(data);
-
-  //     if (!data.status === 200) {
-  //       const err = new Error(data.error);
-  //       throw err;
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     navigate("/admin/login", { replace: true });
-  //   }
-  // };
-
   const calldata = async () => {
     try {
       const res = await fetch("/admin/data", {
@@ -68,7 +40,6 @@ export default function Data() {
     return ele.result  == 'Pass';
   });
   useEffect(() => {
-    // getAuth();
     calldata();
   }, []);
 

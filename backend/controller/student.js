@@ -4,34 +4,8 @@ const studentModel = require("../model/StudentModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { SECRETKEY } = require("../config");
-const questionModel = require("../model/questionModel");
 const authentication = require("../middleware/authentication");
 const { check, body, validationResult } = require("express-validator");
-const cookieParser = require("cookie-parser");
-
-// const Authenticate = async (req, res, next) => {
-//   try {
-//     const token = req.cookies.jwtt;
-//     console.log("helllo from authenticationnnnnnnnnn", token);
-//     const verifyToken = jwt.verify(token, SECRETKEY);
-
-//     const rootStudent = await studentModel.findOne({
-//       _id: verifyToken._id,
-//     });
-
-//     if (!rootStudent) {
-//       throw new Error(`Student not Found`);
-//     }
-//     req.token = token;
-//     req.rootStudent = rootStudent;
-//     req.studentID = rootStudent._id;
-//     next();
-//   } catch (err) {
-//     res.status(401).send("Unauthorized :  No Token Provided");
-//     console.log(err);
-//   }
-// };
-
 router.post(
   "/register",
   [
@@ -46,8 +20,6 @@ router.post(
       });
     }),
     check("password")
-      // .isLength({ min: 5 })
-      // .withMessage("must be at least 5 chars long")
       .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
       .withMessage(
         "Password Must Be at least 8 chars long with atleast 1 spaciel charactor and number"

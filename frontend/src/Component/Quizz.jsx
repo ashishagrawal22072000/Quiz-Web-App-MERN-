@@ -5,7 +5,6 @@ import StudentNav from "./StudentNav";
 import { toast } from "react-toastify";
 export default function Quizz() {
   const navigate = useNavigate();
-  // const [currStudent, setCurrStudent] = useState();
   const [quedata, setquedata] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -103,29 +102,7 @@ export default function Quizz() {
     }
   };
 
-  // const getAuth = async () => {
-  //   try {
-  //     const res = await fetch("/quizz", {
-  //       method: "GET",
-  //       headers: {
-  //         Accept: "appllication/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //     });
 
-  //     const data = await res.json();
-  //     setCurrStudent(data);
-
-  //     if (!data.status === 200) {
-  //       const err = new Error(data.error);
-  //       throw err;
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     navigate("/student/login", { replace: true });
-  //   }
-  // };
 
   const calldata = async () => {
     try {
@@ -154,7 +131,6 @@ export default function Quizz() {
   };
 
   useEffect(() => {
-    // getAuth();
     calldata();
   }, []);
 

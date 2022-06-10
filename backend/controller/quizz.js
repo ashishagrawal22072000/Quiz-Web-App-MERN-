@@ -17,7 +17,6 @@ router.get("/", authentication, async (req, res) => {
     } else {
       const questions = await questionModel.find({});
       res.status(200).send(questions);
-      // console.log("kbfkevekhce", req.studentID);
     }
 
     console.log("this is the current student" + studentStatus);

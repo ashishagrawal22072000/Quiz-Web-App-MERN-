@@ -1,11 +1,5 @@
-const express = require("express");
 const jwt = require("jsonwebtoken");
 const studentModel = require("../model/StudentModel");
-// const { SECRETKEY } = require("../config");
-const cookieParser = require("cookie-parser");
-// const studentModel = require("../model/StudentModel");
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
 const { SECRETKEY } = require("../config");
 const Authenticate = async (req, res, next) => {
   try {
