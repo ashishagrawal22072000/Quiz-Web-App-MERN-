@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign({ _id: studentlogin._id }, SECRETKEY);
         // console.log(token);
         res.cookie("jwtt", token, {
-          expires: new Date(Date.now() + 25892000000),
+          expires: new Date(Date.now() + 10000000000),
           httpOnly: true,
         });
         res.status(200).json({ message: "student login" });

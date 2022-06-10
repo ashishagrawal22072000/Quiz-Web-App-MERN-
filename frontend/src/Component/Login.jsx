@@ -71,53 +71,59 @@ export default function Login() {
   return (
     <>
       <StudentNav />
-      <div className="container p-5 mt-5 bg-warning">
-        <form method="POST">
-          <h1 className="text-center">Login Yourself</h1>
-          <hr />
+      <div className="container p-5 mt-5 bg-warning w-50 d-flex justify-content-center">
+        <div className="container">
+          <form method="POST">
+            <h1 className="text-center">Login Yourself</h1>
+            <hr />
 
-          <div className="mb-5">
-            <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              autoComplete="off"
-              value={data.email}
-              onChange={(e) => setdata({ ...data, email: e.target.value })}
-            />
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="exampleInputPassword1"
-              className="form-label fw-bold"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={data.password}
-              onChange={(e) => setdata({ ...data, password: e.target.value })}
-            />
-          </div>
-          <div className="d-flex justify-content-center">
-            <button
-              type="submit"
-              className="btn btn-dark fw-bold"
-              onClick={loginStudent}
-            >
-              Login
-            </button>
-          </div>
-          <p className="d-flex justify-content-center mt-3 fw-bold">
-            Don't have An Account ?<Link to="/student/register">Register</Link>
-          </p>
-        </form>
+            <div className="mb-5">
+              <label
+                htmlFor="exampleInputEmail1"
+                className="form-label fw-bold"
+              >
+                Email address
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                autoComplete="off"
+                value={data.email}
+                onChange={(e) => setdata({ ...data, email: e.target.value })}
+              />
+            </div>
+            <div className="mb-5">
+              <label
+                htmlFor="exampleInputPassword1"
+                className="form-label fw-bold"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="exampleInputPassword1"
+                value={data.password}
+                onChange={(e) => setdata({ ...data, password: e.target.value })}
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+              <button
+                type="submit"
+                className="btn btn-dark fw-bold"
+                onClick={loginStudent}
+              >
+                Login
+              </button>
+            </div>
+            <p className="d-flex justify-content-center mt-3 fw-bold">
+              Don't have An Account ?
+              <Link to="/student/register">Register</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </>
   );
